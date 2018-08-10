@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+# [1] https://developer.apple.com/library/content/qa/qa1686/_index.html
+
+import os
+import subprocess
+
+from argparse import ArgumentParser
+
+def svg_to_png(svg_file, png_file, size):
+	# Note that `inkscape` requires absolute paths on macOS.
+	process = subprocess.run(['inkscape',
+		'--file={}'.format(os.path.abspath(svg_file)),
+		'--export-png={}'.format(os.path.abspath(png_file)),
+		'--export-width={}'.format(size),
+		'--export-height={}'.format(size),
+		'--export-background={}'.format('white'),
+	])
+	process.check_returncode()
+
+class AppIcon:
+	def __init__(self, name, size, description, required = False):
+		self.name = name
+		self.size = size
+		self.description = description
+		self.required = required
+
+	@staticmethod
+	def universal():
+		return [
+			# [1, Table 5, Version 2016-12-20]
+			AppIcon('Icon-60@2x.png',          120, "Home screen on iPhone/iPod Touch with retina display", required = True),
+			AppIcon('Icon-60@3x.png',          180, "Home screen on iPhone with retina HD display"),
+			AppIcon('Icon-76.png',              76, "Home screen on iPad",                                  required = True),
+			AppIcon('Icon-76@2x.png',          152, "Home screen on iPad with retina display"),
+			AppIcon('Icon-83.5@2x.png',        167, "Home screen on iPad Pro"),
+			AppIcon('Icon-Small-40.png',        40, "Spotlight"),
+			AppIcon('Icon-Small-40@2x.png',     80, "Spotlight on devices with retina display"),
+			AppIcon('Icon-Small-40@3x.png',    120, "Spotlight on devices with retina HD display"),
+			AppIcon('Icon-Small.png',           29, "Settings"),
+			AppIcon('Icon-Small@2x.png',        58, "Settings on devices with retina display"),
+			AppIcon('Icon-Small@3x.png',        87, "Settings on devices with retina HD display"),
+			# Manually added [1, Figure 3, Version 2016-12-20]
+			AppIcon('Icon-Notification@2x.png', 40, ""),
+			AppIcon('Icon-Notification@3x.png', 60, ""),
+		]
+
+def main():
+	parser = ArgumentParser()
+	parser.add_argument(
+		'svg',
+		type = str,
+	)
+	args = parser.parse_args()
+
+	for app_icon in AppIcon.universal():
+		print('Transforming {}...'.format(app_icon.name))
+		svg_to_png(svg_file = args.svg, png_file = app_icon.name, size = app_icon.size)
+	print('Done.')
+
+if __name__ == '__main__':
+	main()
