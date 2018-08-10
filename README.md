@@ -4,7 +4,7 @@ Generate a set of iOS or watchOS app icons¹ from a given SVG file.
 
 ## Requirements
 
-Inkscape has to be installed and `inkscape` need to be in your `PATH`.
+[Inkscape](https://inkscape.org) has to be installed and `inkscape` need to be in your `PATH`.
 
 ## Usage
 
