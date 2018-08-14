@@ -28,7 +28,9 @@ class AppIcon:
 	@staticmethod
 	def universal():
 		return [
-			# [1, Table 5, Version 2016-12-20]
+			# [1, Table 5, Version 2018-08-14]
+			AppIcon('iTunesArtwork.png',       512, "App list in iTunes"),
+			AppIcon('iTunesArtwork@2x.png',   1024, "App list in iTunes on devices with retina display"),
 			AppIcon('Icon-60@2x.png',          120, "Home screen on iPhone/iPod Touch with retina display", required = True),
 			AppIcon('Icon-60@3x.png',          180, "Home screen on iPhone with retina HD display"),
 			AppIcon('Icon-76.png',              76, "Home screen on iPad",                                  required = True),
